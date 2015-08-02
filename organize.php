@@ -53,7 +53,7 @@ foreach ($folders as $folder => $videos) {
     foreach ($videos as $video) {
         $i++;
         $script .= "echo -n Video {$i} of {$folderTotal}... ;".PHP_EOL;
-        $script .= "cp {$video['origin']} {$folder}/{$video['filename']};".PHP_EOL;
+        $script .= "cp \"{$video['origin']}\" \"{$folder}/{$video['filename']}\";".PHP_EOL;
         $script .= "echo [DONE];".PHP_EOL;
     }
 }
