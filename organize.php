@@ -1,3 +1,4 @@
+#!/usr/bin/php -q
 <?php
 $config          = parse_ini_file('config.ini');
 $destinationRoot = $config['destination'];
