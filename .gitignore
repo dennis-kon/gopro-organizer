@@ -1,6 +1,5 @@
 config.ini
 nbproject/
-copy_videos.sh
 .idea/
 /vendor/
 copy_*.sh
