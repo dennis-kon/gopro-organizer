@@ -1,0 +1,17 @@
+{
+    "name": "guilhermednt/media-organizer",
+    "require": {
+        "php": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Donato\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Guilherme Donato",
+            "email": "guilhermednt@users.noreply.github.com"
+        }
+    ]
+}

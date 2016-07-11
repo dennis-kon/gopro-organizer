@@ -1,18 +1,24 @@
 <?php
-$config          = parse_ini_file('config.ini');
-$destinationRoot = $config['destination'];
+
+require_once 'vendor/autoload.php';
+
+use Donato\MediaOrganizer\FileLister;
+use Donato\MediaOrganizer\Exception\DirectoryNotFoundException;
+
+$config = parse_ini_file('config.ini', true);
+$destinationRoot = $config['gopro']['destination'];
+$allowedExt = $config['gopro']['include_ext'];
 
 if ($argc < 2) {
     die(printf('Usage %s <microSD path>/DCIM/100GOPRO'.PHP_EOL, $argv[0]));
 }
-$dir = realpath($argv[1]);
 
-if (!file_exists($dir) || !is_dir($dir)) {
-    die(printf('Directory not found.'.PHP_EOL));
+try {
+    $fileLister = new FileLister($argv[1], $allowedExt);
+    $videos = $fileLister->getFiles();
+} catch (DirectoryNotFoundException $e) {
+    die(printf($e->getMessage().PHP_EOL));
 }
-$pattern = $dir.DIRECTORY_SEPARATOR.'*MP4';
-
-$videos = glob($pattern);
 
 if (count($videos) <= 0) {
     die(printf('No videos found.'.PHP_EOL));
@@ -21,24 +27,24 @@ if (count($videos) <= 0) {
 $folders = [];
 foreach ($videos as $video) {
     $timestamp = filemtime($video);
-    $year      = date('Y', $timestamp);
-    $month     = date('Y-m', $timestamp);
-    $date      = date('Y-m-d', $timestamp);
+    $year = date('Y', $timestamp);
+    $month = date('Y-m', $timestamp);
+    $date = date('Y-m-d', $timestamp);
 
-    $destination = implode(DIRECTORY_SEPARATOR,
+    $destination = implode(
+        DIRECTORY_SEPARATOR,
         [
             $destinationRoot,
             $year,
             $month,
-            $date
-        ]);
+            $date,
+        ]
+    );
 
     $filename = str_replace($dir.DIRECTORY_SEPARATOR, '', $video);
 
     $folders[$destination][] = [
         'origin' => $video,
-        'filename' => $filename
+        'filename' => $filename,
     ];
-
-    //echo sprintf("%s - %s", $video, $date).PHP_EOL;
 }

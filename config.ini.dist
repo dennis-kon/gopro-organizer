@@ -1,1 +1,6 @@
+[gopro]
 destination=/path/to/gopro/unfiltered
+include_ext='/(mp4)$/i'
+
+[media]
+include_ext='/(mov|jpg|mp4|cr2)$/i'
