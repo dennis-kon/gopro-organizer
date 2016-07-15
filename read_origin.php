@@ -41,7 +41,7 @@ foreach ($videos as $video) {
         ]
     );
 
-    $filename = str_replace($dir.DIRECTORY_SEPARATOR, '', $video);
+    $filename = str_replace($fileLister->getDirectory().DIRECTORY_SEPARATOR, '', $video);
 
     $folders[$destination][] = [
         'origin' => $video,
